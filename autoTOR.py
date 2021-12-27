@@ -39,13 +39,23 @@ except subprocess.CalledProcessError:
 
 os.system("clear")
 def ma_ip():
-    url='https://www.myexternalip.com/raw'
-    get_ip= requests.get(url,proxies=dict(http='socks5://127.0.0.1:9050',https='socks5://127.0.0.1:9050'))
-    return get_ip.text
+    try:
+        url='https://www.myexternalip.com/raw'
+        get_ip= requests.get(url,proxies=dict(http='socks5://127.0.0.1:9050',https='socks5://127.0.0.1:9050'))
+        return get_ip.text
+    except:
+        restart()
 
 def change():
-    os.system("service tor reload")
-    print ('[+] Your IP has been Changed to : '+str(ma_ip()))
+    try:
+        os.system("service tor reload")
+        print ('[+] Your IP has been Changed to : '+str(ma_ip()))
+    except:
+        restart()
+
+def restart():
+    os.system("service tor start")
+    change()
 
 print('''\033[1;32;40m \n
                 _          _______
@@ -68,7 +78,7 @@ time.sleep(3)
 print("\033[1;32;40m change your  SOCKES to 127.0.0.1:9050 \n")
 os.system("service tor start")
 x = input("[+] time to change Ip in Sec [type=60] >> ")
-lin = input("[+] how many time do you want to change your ip [type=1000]for infinte ip change type [0] >>")
+lin = input("[+] how many time do you want to change your ip [type=1000]for infinte ip change type [0] >> ")
 if int(lin) ==int(0):
 
 	while True:
@@ -84,3 +94,4 @@ else:
 	for i in range(int(lin)):
 		    time.sleep(int(x))
 		    change()
+                            
